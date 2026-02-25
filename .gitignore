@@ -1,0 +1,29 @@
+# Machine-specific and secret files
+CLAUDE.local.md
+.env
+secrets.h
+*.token
+
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# CMake
+build/
+cmake-build-*/
+
+# Compiled output
+*.elf
+*.hex
+*.bin
+*.map
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
