@@ -4,6 +4,11 @@ CLAUDE.local.md
 secrets.h
 *.token
 
+# vault-sync.py runtime files
+.vault-sync-state.json
+.vault-sync.lock
+*.obsidian-*.md
+
 # PlatformIO
 .pio/
 .pioenvs/
