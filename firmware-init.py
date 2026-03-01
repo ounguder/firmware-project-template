@@ -411,7 +411,7 @@ def main():
     print(f"\nCopying template to: {project_dir}")
     shutil.copytree(
         template_dir, project_dir,
-        ignore=shutil.ignore_patterns(".git", "CLAUDE.local.md"),
+        ignore=shutil.ignore_patterns(".git", "CLAUDE.local.md", "__pycache__", "*.pyc"),
     )
 
     # Step 9: Write filled VAULT-BLUEPRINT.md

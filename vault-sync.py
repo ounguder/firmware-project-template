@@ -203,6 +203,7 @@ def sync_pair(local: Path, vault: Path, rel_str: str,
         with state_lock:
             state[rel_str] = {"checksum": local_cs, "last_sync": time.time()}
         log("sync", f"{rel_str}  ->  vault")
+        save_state(state, state_lock)
 
     elif vault_changed and not local_changed and vault_cs is not None:
         # Vault wins → copy to local
@@ -211,9 +212,12 @@ def sync_pair(local: Path, vault: Path, rel_str: str,
         with state_lock:
             state[rel_str] = {"checksum": vault_cs, "last_sync": time.time()}
         log("sync", f"{rel_str}  <-  vault")
+        save_state(state, state_lock)
 
     elif local_changed and vault_changed and local_cs is not None and vault_cs is not None:
-        # Both changed → conflict: save vault version alongside local, keep local
+        # Both changed → conflict: save vault version alongside local, keep local.
+        # Do NOT update state — leave the pre-conflict baseline so the conflict is
+        # re-detected on every reconciliation until the user resolves it manually.
         conflict_name = f"{local.stem}.obsidian-{ts_suffix()}{local.suffix}"
         conflict_path = local.parent / conflict_name
         try:
@@ -221,8 +225,6 @@ def sync_pair(local: Path, vault: Path, rel_str: str,
         except OSError as e:
             log("error", f"Could not save conflict file: {e}")
             return
-        with state_lock:
-            state[rel_str] = {"checksum": local_cs, "last_sync": time.time()}
         log("CONFLICT", f"{rel_str}")
         print(f"             Both local and vault were edited since last sync.")
         print(f"             Vault version saved as: {conflict_name}")
@@ -230,8 +232,6 @@ def sync_pair(local: Path, vault: Path, rel_str: str,
 
     else:
         log("skip", f"{rel_str}  (no change)")
-
-    save_state(state, state_lock)
 
 
 # ── Reconciliation ────────────────────────────────────────────────────────────
