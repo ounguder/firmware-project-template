@@ -69,7 +69,8 @@ claude
 │       ├── session-start.md    ← /session-start skill
 │       ├── session-end.md      ← /session-end skill
 │       ├── sync-vault.md       ← /sync-vault skill
-│       └── promote.md          ← /promote skill
+│       ├── promote.md          ← /promote skill
+│       └── sync-status.md      ← /sync-status skill
 ├── docs/
 │   ├── DESIGN-REVIEW.md        ← purpose, approach, acceptance criteria (Phase 2)
 │   ├── FSD.md                  ← full system design and requirements

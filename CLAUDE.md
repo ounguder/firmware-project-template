@@ -1,8 +1,8 @@
 # [PROJECT NAME] — Firmware
 
-<!-- This file is filled by Claude in Session 1.
-     Start Claude and say: "Let's set up a new firmware project. Interview me and fill the docs."
-     The only file you fill manually is CLAUDE.local.md -->
+<!-- This file is filled automatically during /new-project (Phase 3 — Technical Kickoff).
+     To initialize this project: run `claude` in the project root, then `/new-project`.
+     The only file you fill manually is CLAUDE.local.md (created by /session-start wizard). -->
 
 ## Target Hardware
 

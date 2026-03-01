@@ -106,5 +106,5 @@ With the values above, a file at `docs/FSD.md` in this project maps to:
 ```
 For example:
 ```
-C:\Users\ungud\...\obsidian-git\01 - Projects\Eco-Twin\DemoSetup\Edge-Node\Sensor Reading\sensor-reading\docs\FSD.md
+C:\Users\{your-username}\...\obsidian-git\01 - Projects\Eco-Twin\DemoSetup\Edge-Node\Sensor Reading\sensor-reading\docs\FSD.md
 ```
