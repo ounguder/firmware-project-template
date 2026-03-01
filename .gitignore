@@ -4,6 +4,10 @@ CLAUDE.local.md
 secrets.h
 *.token
 
+# Python
+__pycache__/
+*.pyc
+
 # vault-sync.py runtime files
 .vault-sync-state.json
 .vault-sync.lock
