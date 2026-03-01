@@ -27,6 +27,11 @@ from pathlib import Path
 from datetime import date
 from textwrap import dedent
 
+# NOTE: This script is copied into every new project folder by /new-project (via shutil.copytree).
+# If you are reading this inside a project folder (not inside firmware-project-template/),
+# you do not need to run it here. Only run firmware-init.py from firmware-project-template/
+# to initialize a NEW project.
+
 # ── Prerequisite checks ───────────────────────────────────────────────────────
 
 def check_prereqs():

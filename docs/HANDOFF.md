@@ -5,8 +5,10 @@
 ## Status
 - Date:
 - Branch:
+- Firmware version:
 - Hardware revision:
 - Last verified on hardware:
+- Last flash date:
 
 ---
 

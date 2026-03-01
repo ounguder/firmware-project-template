@@ -1,10 +1,3 @@
----
-type: hardware-reference
-project: "[project-name]"
-board_status: provisional   # provisional | pcb-arrived | verified
-pcb_notes: ""               # e.g. "Rev 1.0 in manufacturing — pin assignments subject to change"
----
-
 # Hardware Reference — [PROJECT NAME]
 
 <!-- Filled by Claude in Session 1 (Technical Kickoff) based on hardware interview answers. -->
@@ -42,6 +35,15 @@ pcb_notes: ""               # e.g. "Rev 1.0 in manufacturing — pin assignments
 ---
 
 ## Clock Tree
+
+---
+
+## NVM Configuration
+
+<!-- Non-volatile memory: calibration offsets, device config, provisioning data stored in flash/EEPROM -->
+
+| Field | Default | Flash Offset | Size | Description |
+|-------|---------|-------------|------|-------------|
 
 ---
 

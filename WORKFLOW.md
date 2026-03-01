@@ -284,6 +284,25 @@ python vault-sync.py
 Only one instance per project is allowed. If you try to start a second instance, vault-sync.py
 detects the existing lockfile and exits with a clear message.
 
+### Renaming or deleting files
+
+`vault-sync.py` does **not** propagate deletions or renames — deleting a file on one side
+never deletes it on the other (this would be too destructive to automate).
+
+**If you rename or delete a documentation file locally:**
+
+1. Delete the old filename from the vault manually (open the vault folder in Explorer or Obsidian)
+2. Run `/sync-vault` — vault-sync.py will copy the new/renamed local file to the vault
+
+**To check for stale orphan files** (files in the vault that no longer exist locally):
+
+```powershell
+python vault-sync.py --clean
+```
+
+This lists files present in the vault project folder but absent locally. It does **not** delete
+anything — you review the list and decide what to remove manually.
+
 ---
 
 ## Continuing on a Different Machine

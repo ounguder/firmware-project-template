@@ -1,7 +1,7 @@
 # /session-end — Close a working session
 
 Run this at the end of every working session.
-Updates HANDOFF.md, proposes knowledge promotions, and commits if there are changes.
+Updates HANDOFF.md, proposes knowledge promotions, stops vault sync, and commits if there are changes.
 
 Complete all steps in order.
 
@@ -17,6 +17,7 @@ Fill every section:
 ## Status
 - Date: {today's date}
 - Branch: {current git branch — run: git branch --show-current}
+- Firmware version: {from CLAUDE.md or carry forward}
 - Hardware revision: {from CLAUDE.md or carry forward from previous HANDOFF.md}
 - Last verified on hardware: {carry forward or update if verified today}
 
@@ -134,7 +135,25 @@ After writing each note, say: "Knowledge note created: `{path}`"
 
 ---
 
-## Step 3 — Git commit
+## Step 3 — Stop vault-sync.py
+
+Check for `.vault-sync.lock` in the project root.
+
+**If `.vault-sync.lock` exists:**
+- Read the PID from the file
+- Stop the process:
+  ```
+  kill {pid}        # Unix / Git Bash
+  taskkill /PID {pid} /F   # PowerShell fallback
+  ```
+- Say: "vault-sync.py (PID {pid}) stopped."
+
+**If `.vault-sync.lock` does not exist:**
+- Say: "vault-sync.py is not running — nothing to stop."
+
+---
+
+## Step 4 — Git commit
 
 Run:
 ```
@@ -142,9 +161,23 @@ git status --short
 ```
 
 **If output is empty** (nothing changed): say "No file changes this session — nothing to commit."
-Skip to Step 4.
+Skip to Step 5.
 
-**If there are changes**, propose a commit message:
+**If there are changes**, show the full list of modified and untracked files, then stage all changes:
+
+```
+git add -u
+```
+This stages all modifications and deletions of already-tracked files (src/, include/, tests/,
+docs/, Report/, lessonsLearned/, CLAUDE.md, VAULT-BLUEPRINT.md, .claude/rules/, etc.).
+
+Then stage any new untracked files in tracked directories:
+```
+git add src/ include/ tests/ docs/ Report/ lessonsLearned/ .claude/rules/ CLAUDE.md VAULT-BLUEPRINT.md
+```
+(This is safe — git ignores directories it does not track and new files not in those paths.)
+
+Run `git status --short` again to confirm the full staged set, then propose a commit message:
 > "Here is the proposed commit message:
 > ```
 > {type}: {concise summary of what was done this session}
@@ -156,16 +189,15 @@ Skip to Step 4.
 `{type}` follows conventional commits: `feat`, `fix`, `docs`, `test`, `refactor`, `chore`.
 
 If yes:
-1. Run `git add` for specific files only (list the files explicitly — do not use `git add .`)
-2. Run `git commit -m "{message}"`
-3. Run `git push`
-4. Report: "Committed and pushed. {commit hash} — {message}"
+1. Run `git commit -m "{message}"`
+2. Run `git push`
+3. Report: "Committed and pushed. {commit hash} — {message}"
 
 If no: say "Skipping commit. Changes are saved locally."
 
 ---
 
-## Step 4 — Done
+## Step 5 — Done
 
 Say:
 > "Session closed. HANDOFF.md is updated.

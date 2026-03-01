@@ -321,29 +321,9 @@ implemented (see FR-05 in FSD.md).
 
 ---
 
-## Workflow: Starting a New Project
+## Workflow
 
-1. Copy this template folder: `cp -r firmware-project-template my-new-project`
-2. Replace all `[PROJECT NAME]`, `[MCU]`, and `[placeholder]` markers
-3. Create `CLAUDE.local.md` for your machine (never commit it)
-4. Fill in `docs/FSD.md` with your actual requirements
-5. Fill in `docs/HARDWARE.md` with your pin map
-6. Open a Claude Code session: `claude` in the project directory
-7. Claude reads `CLAUDE.md` automatically — you are ready
+For all workflow instructions — starting a new project, daily sessions, vault sync,
+knowledge promotion, and continuing on a different machine — see **`WORKFLOW.md`**.
 
-## Workflow: Daily Session
-
-1. Open terminal in project directory
-2. Start Claude: `claude`
-3. Claude reads `CLAUDE.md` and `HANDOFF.md` — context is restored
-4. Work
-5. Before closing: ask Claude to update `HANDOFF.md` with the session summary
-
-## Workflow: New Frame or Protocol Change
-
-1. Update `docs/PROTOCOL.md` first — spec before code
-2. Update `docs/FSD.md` data model section
-3. Add test vectors to `tests/test_vectors.json`
-4. Implement the change
-5. Run `pio test -e native` to verify test vectors pass
-6. Update `HANDOFF.md`
+This file is a file-by-file reference only.

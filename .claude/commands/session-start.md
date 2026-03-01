@@ -83,16 +83,20 @@ From the content of `CLAUDE.md`, extract:
 
 Read `VAULT-BLUEPRINT.md` to get `vault.root`.
 
-Scan `{vault.root}/08 - Knowledge/` for notes whose filenames or first-line titles contain
-any of the extracted keywords (case-insensitive).
+List filenames (not file contents) in `{vault.root}/08 - Knowledge/` recursively.
+
+**If there are more than 200 files**, scan only the first 200 (sorted alphabetically) and print:
+> "08-Knowledge is large — scanned top 200 files by name. Run /promote to search for specific topics manually."
+
+Match filenames against the extracted keywords (case-insensitive). Do not read file contents during the scan.
 
 If matching notes are found:
 > "I found knowledge notes relevant to this project:
-> - [{note title}]({vault path})
+> - [{note filename}]({vault path})
 > - ...
 > Load them into context? [yes / no / skip]"
 
-If yes: read those files and hold their content in context for the session.
+If yes: read those specific files and hold their content in context for the session.
 If no or skip: continue without loading.
 
 If no matches are found: skip this step silently.
@@ -113,7 +117,8 @@ Check if `vault-sync.py` is already running by looking for `.vault-sync.lock` in
   python vault-sync.py
   ```
   Run this as a background process so it does not block the session.
-- Say: "vault-sync.py started — watching for file changes."
+- After it starts, read `.vault-sync.lock` to get the PID.
+- Say: "vault-sync.py started (PID {pid}). Continuous sync is active. It will be stopped at /session-end."
 
 ---
 

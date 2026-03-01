@@ -357,11 +357,38 @@ def main():
         "--once", action="store_true",
         help="Reconcile all tracked files once and exit (no continuous watch)."
     )
+    parser.add_argument(
+        "--clean", action="store_true",
+        help="List files present in the vault project folder but absent locally. Does not delete anything."
+    )
     args = parser.parse_args()
 
     cfg        = load_blueprint()
     state      = load_state()
     state_lock = threading.Lock()
+
+    if args.clean:
+        vault_only = []
+        for f in cfg["vault_project"].rglob("*"):
+            if not f.is_file():
+                continue
+            try:
+                rel = f.relative_to(cfg["vault_project"])
+            except ValueError:
+                continue
+            if not is_included(rel, cfg):
+                continue
+            local = cfg["local_root"] / rel
+            if not local.exists():
+                vault_only.append(rel.as_posix())
+        if vault_only:
+            print(f"Files in vault but absent locally ({len(vault_only)}):")
+            for p in sorted(vault_only):
+                print(f"  {p}")
+            print("No files were deleted. Remove them from the vault manually if they are stale.")
+        else:
+            print("Clean: no orphan files found in vault.")
+        return
 
     if args.once:
         reconcile(cfg, state, state_lock)
