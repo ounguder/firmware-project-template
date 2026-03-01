@@ -40,6 +40,7 @@ so Claude executes them consistently without re-explanation every session.
 | `/session-end` | Every session — updates HANDOFF.md, promotes knowledge, commits |
 | `/sync-vault` | On demand — force a one-shot sync to/from vault |
 | `/promote` | On demand — promote a learning to 08 - Knowledge at any time |
+| `/sync-status` | On demand — check whether vault-sync.py is running; report PID and last sync state |
 
 ---
 
@@ -373,6 +374,7 @@ This is a clickable Obsidian wikilink. In graph view: knowledge node → project
 | End every session | `/session-end` |
 | Force sync docs to vault | `/sync-vault` |
 | Promote a learning now | `/promote` |
+| Check if vault-sync is running | `/sync-status` |
 | Check what's in progress | "Read HANDOFF.md and summarise next steps" |
 | Resolve a conflict | Merge manually → delete `.obsidian-*.md` file → `/sync-vault` |
 | Continue on another machine | `git clone` + `claude` + `/session-start` |
