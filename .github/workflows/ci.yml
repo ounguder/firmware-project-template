@@ -33,10 +33,10 @@ jobs:
 
       - name: Run unit tests (PlatformIO native)
         run: |
-          # Only run if platformio.ini has a configured [env:native] platform
-          if grep -qE '^platform\s*=' platformio.ini; then
+          # Only run if a real target platform is configured (not empty, not 'native')
+          if grep -E '^platform\s*=' platformio.ini | grep -qvE '=\s*(native\s*)?$'; then
             pio test -e native --verbose
           else
-            echo "platformio.ini has no configured platform — skipping PlatformIO tests."
-            echo "This project uses a custom build system or has no automated tests."
+            echo "No target platform configured in platformio.ini — skipping PlatformIO tests."
+            echo "Fill in [env:target] platform to enable automated tests."
           fi
