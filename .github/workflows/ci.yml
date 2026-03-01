@@ -1,8 +1,9 @@
 name: CI
 
-# Runs unit tests on every push and pull request.
+# Runs PlatformIO unit tests on every push and pull request.
 # Tests run on the native (host) environment — no hardware required.
-# Requires PlatformIO [env:native] to be configured in platformio.ini.
+# Skips gracefully if platformio.ini has no configured platform (blank template,
+# Makefile-based projects, or projects with no automated tests).
 
 on:
   push:
@@ -30,5 +31,12 @@ jobs:
       - name: Install PlatformIO
         run: pip install --upgrade platformio
 
-      - name: Run unit tests
-        run: pio test -e native --verbose
+      - name: Run unit tests (PlatformIO native)
+        run: |
+          # Only run if platformio.ini has a configured [env:native] platform
+          if grep -qE '^platform\s*=' platformio.ini; then
+            pio test -e native --verbose
+          else
+            echo "platformio.ini has no configured platform — skipping PlatformIO tests."
+            echo "This project uses a custom build system or has no automated tests."
+          fi
